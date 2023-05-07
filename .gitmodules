@@ -1,0 +1,3 @@
+[submodule "tkey-libs"]
+	path = tkey-libs
+	url = https://github.com/sagehane/tkey-libs.git
