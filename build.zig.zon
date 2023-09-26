@@ -1,0 +1,11 @@
+.{
+    .name = "tkey-example-zig",
+    .version = "0.1.0",
+
+    .dependencies = .{
+        .@"tkey-libs" = .{
+            .url = "https://github.com/tillitis/tkey-libs/archive/refs/tags/v0.0.2.tar.gz",
+            .hash = "1220ada4aa363286ed96db21cbd38c3a18132a908b7711c9e299e3911702d1d0511a",
+        },
+    },
+}
