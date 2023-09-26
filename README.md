@@ -8,10 +8,10 @@ The `build.zig` is also meant to serve as a template for people interested in
 targetting for the TKey.
 
 ### Prerequisites
-1. Get a TKey or build their [custom QEMU fork](https://github.com/tillitis/tillitis-key1-apps#building-and-running-qemu-manually)
+1. Get a TKey or use their [custom QEMU fork](https://dev.tillitis.se/tools/#qemu-emulator)
 2. Get a recent copy of the Zig binary (ideally from https://ziglang.org/download/)
-3. Make sure [`tkey-runapp`](https://github.com/tillitis/tillitis-key1-apps/tree/main/cmd/tkey-runapp) is in `$PATH`
-4. [Have access to the serial port or add a system rule for the TKey](https://github.com/tillitis/tillitis-key1-apps#users-on-linux) (For running the app with the physical key)
+3. Make sure `tkey-runapp` from https://github.com/tillitis/tkey-devtools is in `$PATH`
+4. [Have access to the serial port or add a system rule for the TKey](https://dev.tillitis.se/devapp/#linux-users) (For running the app with the physical key)
 
 ### Running
 ```sh-session

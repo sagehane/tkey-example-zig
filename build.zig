@@ -15,8 +15,8 @@ comptime {
     }
 }
 
-/// https://github.com/tillitis/tillitis-key1/blob/TK1-23.03.1/doc/system_description/software.md#cpu
-/// https://github.com/tillitis/tillitis-key1/blob/TK1-23.03.1/hw/application_fpga/Makefile
+/// https://dev.tillitis.se/hw/#cpu
+/// https://github.com/tillitis/tillitis-key1/blob/TK1-23.03.2/hw/application_fpga/Makefile
 const tillitis_target = std.zig.CrossTarget{
     .cpu_arch = .riscv32,
     .cpu_model = .{ .explicit = &riscv.cpu.generic_rv32 },
@@ -44,7 +44,7 @@ pub fn getObjcopyBin(b: *std.Build, cs: *Step.Compile, name: []const u8) *Step.I
 }
 
 /// Requires `tkey-runapp` to be in `$PATH`
-/// https://github.com/tillitis/tillitis-key1-apps/tree/main/cmd/tkey-runapp
+/// https://dev.tillitis.se/devapp/#running-a-tkey-device-application
 pub fn addTkeyRunappCmd(b: *std.Build, bin: *Step.InstallFile) *Step.Run {
     const run_cmd = b.addSystemCommand(&.{"tkey-runapp"});
     run_cmd.addFileArg(bin.source);
