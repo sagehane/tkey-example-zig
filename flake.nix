@@ -23,7 +23,7 @@
       let pkgs = import nixpkgs { inherit overlays system; }; in
       {
         devShells.default = pkgs.mkShell {
-          nativeBuildInputs = with pkgs; [ zigpkgs.master ];
+          nativeBuildInputs = with pkgs; [ zigpkgs."0.12.0" ];
         };
       }
     );

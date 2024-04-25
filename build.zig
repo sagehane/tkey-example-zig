@@ -3,12 +3,12 @@
 
 const std = @import("std");
 const Step = std.Build.Step;
-const riscv = std.Target.riscv;
+const Target = std.Target;
+const riscv = Target.riscv;
 
 comptime {
     const current = @import("builtin").zig_version;
-    // https://github.com/ziglang/zig/pull/16667
-    const minimum = std.SemanticVersion.parse("0.12.0-dev.574+g8eff0a0a6") catch unreachable;
+    const minimum = std.SemanticVersion.parse("0.12.0") catch unreachable;
 
     if (current.order(minimum) == .lt) {
         @compileError(std.fmt.comptimePrint("Your Zig version v{} does not meet the minimum build requirement of v{}", .{ current, minimum }));
@@ -17,7 +17,7 @@ comptime {
 
 /// https://dev.tillitis.se/hw/#cpu
 /// https://github.com/tillitis/tillitis-key1/blob/TK1-23.03.2/hw/application_fpga/Makefile
-const tillitis_target = std.zig.CrossTarget{
+const tillitis_target = Target.Query{
     .cpu_arch = .riscv32,
     .cpu_model = .{ .explicit = &riscv.cpu.generic_rv32 },
     .cpu_features_add = riscv.featureSet(&.{ .c, .zmmul }),
@@ -30,14 +30,12 @@ pub fn linkArtifact(b: *std.Build, artfiact: *Step.Compile) void {
     // Requires a `build.zig.zon` entry
     const tkey_libs = b.dependency("tkey-libs", .{});
 
-    // Setting this doesn't seem to affect the resulting binary?
-    // https://releases.llvm.org/16.0.0/tools/clang/docs/ClangCommandLineReference.html#cmdoption-clang-mcmodel
-    artfiact.code_model = .medium;
-
     artfiact.addAssemblyFile(tkey_libs.path("/libcrt0/crt0.S"));
     artfiact.setLinkerScript(tkey_libs.path("app.lds"));
 }
 
+/// Might become unnecessary with `std.Target.ObjectFormat.raw`.
+/// https://github.com/ziglang/zig/blob/0.12.0/src/link.zig#L866
 pub fn getObjcopyBin(b: *std.Build, cs: *Step.Compile, name: []const u8) *Step.InstallFile {
     const objcopy = cs.addObjCopy(.{ .basename = name });
     return b.addInstallBinFile(objcopy.getOutput(), name);
@@ -64,8 +62,11 @@ pub fn build(b: *std.Build) void {
     const app = b.addExecutable(.{
         .name = "app.elf",
         .root_source_file = .{ .path = "src/main.zig" },
-        .target = tillitis_target,
+        .target = b.resolveTargetQuery(tillitis_target),
         .optimize = optimize,
+         // Setting this doesn't seem to affect the resulting binary?
+         // https://releases.llvm.org/16.0.0/tools/clang/docs/ClangCommandLineReference.html#cmdoption-clang-mcmodel
+        .code_model = .medium,
     });
     linkArtifact(b, app);
 

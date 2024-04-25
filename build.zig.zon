@@ -5,8 +5,8 @@
 
     .dependencies = .{
         .@"tkey-libs" = .{
-            .url = "https://github.com/tillitis/tkey-libs/archive/refs/tags/v0.0.2.tar.gz",
-            .hash = "1220ada4aa363286ed96db21cbd38c3a18132a908b7711c9e299e3911702d1d0511a",
+            .url = "https://github.com/tillitis/tkey-libs/archive/refs/tags/v0.1.1.tar.gz",
+            .hash = "12207afe41f161216c3de91c199ed859a8f8ba7faccb511dd60240f0af87175d8de2",
         },
     },
 }
