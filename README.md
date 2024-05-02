@@ -1,3 +1,9 @@
+<!--
+SPDX-FileCopyrightText: 2024 Sage Hane <sage@sagehane.com>
+
+SPDX-License-Identifier: CC0-1.0
+-->
+
 ## Minimal Zig example for the TKey
 Note: The README assumes the user is on Linux as other platforms were never tested
 

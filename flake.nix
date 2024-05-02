@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2024 Sage Hane <sage@sagehane.com>
+#
+# SPDX-License-Identifier: CC0-1.0
+
 # Heavily based on https://github.com/mitchellh/zig-overlay/blob/f29dc15782be8458374ca7b303ca1c156da37a67/templates/init/flake.nix
 
 {

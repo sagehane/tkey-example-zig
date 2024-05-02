@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 Sage Hane <sage@sagehane.com>
+//
+// SPDX-License-Identifier: CC0-1.0
+
 .{
     .name = "tkey-example-zig",
     .version = "0.1.0",

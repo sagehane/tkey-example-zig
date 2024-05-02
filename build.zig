@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 Sage Hane <sage@sagehane.com>
+//
+// SPDX-License-Identifier: CC0-1.0
+
 //! This file is meant to serve as a template for people trying to write their
 //! own TKey app in Zig
 

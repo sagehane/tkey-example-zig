@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 Sage Hane <sage@sagehane.com>
+//
+// SPDX-License-Identifier: CC0-1.0
+
 //! A sample program that makes the TKey flash colours
 
 // https://dev.tillitis.se/memory/
