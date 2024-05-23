@@ -26,8 +26,19 @@
       system:
       let pkgs = import nixpkgs { inherit overlays system; }; in
       {
-        devShells.default = pkgs.mkShell {
-          nativeBuildInputs = with pkgs; [ zigpkgs."0.12.0" ];
+        packages.default = with pkgs; stdenv.mkDerivation {
+          name = "tkey-example-zig";
+          version = "0.2.0-dev";
+          src = self;
+
+          nativeBuildInputs = [ zigpkgs."0.12.0" ];
+
+          installPhase = ''
+            export ZIG_GLOBAL_CACHE_DIR=$(mktemp -d)
+            mkdir -p $ZIG_GLOBAL_CACHE_DIR
+            ln -s ${callPackage ./deps.nix { }} $ZIG_GLOBAL_CACHE_DIR/p
+            zig build install -Drelease --prefix $out
+          '';
         };
       }
     );
