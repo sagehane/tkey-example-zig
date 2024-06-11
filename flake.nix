@@ -31,7 +31,7 @@
           version = "0.2.0-dev";
           src = self;
 
-          nativeBuildInputs = [ zigpkgs."0.12.0" ];
+          nativeBuildInputs = [ zigpkgs."0.13.0" ];
 
           installPhase = ''
             export ZIG_GLOBAL_CACHE_DIR=$(mktemp -d)

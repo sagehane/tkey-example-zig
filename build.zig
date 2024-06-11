@@ -12,7 +12,7 @@ const riscv = Target.riscv;
 
 comptime {
     const current = @import("builtin").zig_version;
-    const minimum = std.SemanticVersion.parse("0.12.0") catch unreachable;
+    const minimum = std.SemanticVersion.parse("0.13.0") catch unreachable;
 
     if (current.order(minimum) == .lt) {
         @compileError(std.fmt.comptimePrint("Your Zig version v{} does not meet the minimum build requirement of v{}", .{ current, minimum }));
@@ -26,15 +26,15 @@ const tillitis_target = Target.Query{
     .cpu_model = .{ .explicit = &riscv.cpu.generic_rv32 },
     .cpu_features_add = riscv.featureSet(&.{ .c, .zmmul }),
     .os_tag = .freestanding,
-    // mabi seems to be set to `ilp32` but idk what the Zig/LLVM equivalent is
+    // mabi seems to be set to `ilp32` but idk what the Zig/LLVM equivalent is.
     //.abi = .gnuilp32,
 };
 
 pub fn linkArtifact(b: *std.Build, artfiact: *Step.Compile) void {
-    // Requires a `build.zig.zon` entry
+    // Requires a `build.zig.zon` entry.
     const tkey_libs = b.dependency("tkey-libs", .{});
 
-    artfiact.addAssemblyFile(tkey_libs.path("/libcrt0/crt0.S"));
+    artfiact.addAssemblyFile(tkey_libs.path("libcrt0/crt0.S"));
     artfiact.setLinkerScript(tkey_libs.path("app.lds"));
 }
 
@@ -45,7 +45,7 @@ pub fn getObjcopyBin(b: *std.Build, cs: *Step.Compile, name: []const u8) *Step.I
     return b.addInstallBinFile(objcopy.getOutput(), name);
 }
 
-/// Requires `tkey-runapp` to be in `$PATH`
+/// Requires `tkey-runapp` to be in `$PATH`.
 /// https://dev.tillitis.se/devapp/#running-a-tkey-device-application
 pub fn addTkeyRunappCmd(b: *std.Build, bin: *Step.InstallFile) *Step.Run {
     const run_cmd = b.addSystemCommand(&.{"tkey-runapp"});
@@ -65,7 +65,7 @@ pub fn build(b: *std.Build) void {
 
     const app = b.addExecutable(.{
         .name = "app.elf",
-        .root_source_file = .{ .path = "src/main.zig" },
+        .root_source_file = b.path("src/main.zig"),
         .target = b.resolveTargetQuery(tillitis_target),
         .optimize = optimize,
          // Setting this doesn't seem to affect the resulting binary?
@@ -74,11 +74,11 @@ pub fn build(b: *std.Build) void {
     });
     linkArtifact(b, app);
 
-    // Only necessary when intermediate elf file is needed, persumably for
-    // debugging reasons
+    // Only necessary when the intermediate elf file is needed, persumably for
+    // debugging reasons.
     b.installArtifact(app);
 
-    // The main binary loaded with `tkey-runapp`
+    // The main binary loaded with `tkey-runapp`.
     const bin = getObjcopyBin(b, app, "app.bin");
     b.getInstallStep().dependOn(&bin.step);
 
